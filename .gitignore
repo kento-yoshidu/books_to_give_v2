@@ -1,5 +1,4 @@
-# Added by cargo
+old/
+dist/
 
 /target
-
-old/

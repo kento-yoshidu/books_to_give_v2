@@ -1,17 +1,15 @@
 [[books]]
-isbn = "9784297105594"
-title = "プログラミングRust"
-cover = "https://..."
-tags = ["Rust", "その他"]
-rating = 4
+isbn = "9784873119786"
+title = "プログラミングRust 第2版"
+tags = ["Rust"]
+rating = 5
 added = "2026-10-10"
 memo = "メモ"
 
 [[books]]
-isbn = "9784297105594"
-title = "test2"
-cover = "https://..."
-tags = ["Rust", "その他"]
+isbn = "9784873119540"
+title = "詳説 データベース"
+tags = ["データベース"]
 rating = 4
 added = "2026-10-10"
 memo = "メモ"

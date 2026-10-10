@@ -48,12 +48,13 @@
 - クレート候補: clap, serde, toml, askama, ureq, anyhow。
 - タグでの絞り込み: 複数タグを同時に選べるようにするかは未定。
 - ページネーション: 残すかどうか、JS で切り替えるか静的に分割するかは未定。
-- デプロイ: GitHub Actions でビルドして Pages に公開。URL が `/リポジトリ名/` 配下になるのでベースパスを設定可能にする。
+- ベースパス: URL が `/リポジトリ名/` 配下になるので、リンクや CSS を足す段階でベースパスを設定可能にする。
 
 ## 既存のファイル
 
 - `src/main.rs`: `books.toml` を読み込み、タイトルの一覧を `dist/index.html` に書き出すところまで動いている。HTML は `format!` と `push_str` で組み立てており、テンプレートエンジンは未導入。
 - `books.toml`: サンプルの本が入っている。
+- `.github/workflows/deploy.yml`: `main` への push で `cargo run --release` を実行し、`dist/` を GitHub Pages に公開する。ユーザーの依頼で Claude が書いた。開発は `develop` で行い、PR で `main` にマージする。
 - `dist/`: 生成物。コミットせず、GitHub Actions 上でビルドして公開する。
 - `old/`: 旧アプリ（Next.js 12 + Prisma + Supabase + NextAuth）。仕様の参照用で、コードは流用しない。`.gitignore` で除外済みで、手元にしかない。
 

@@ -1,10 +1,11 @@
 use serde::Deserialize;
+use askama::Template;
 
 #[derive(Debug, Deserialize)]
 struct Book {
     isbn: String,
     title: String,
-    cover: String,
+    cover: Option<String>,
     tags: Vec<String>,
     rating: u8,
     added: String,
@@ -16,34 +17,26 @@ struct Library {
     books: Vec<Book>,
 }
 
+#[derive(Template)]
+#[template(path = "index.html")]
+struct IndexPage {
+    books: Vec<Book>,
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let text = std::fs::read_to_string("books.toml")?;
 
     let library = toml::from_str::<Library>(&text)?;
 
-    let mut content = format!("<!DOCTYPE html>
-<html lang=\"ja\">
-  <head>
-      <meta charset=\"utf-8\">
-      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-      <meta name=\"robots\" content=\"noindex, nofollow\">
-  </head>
-  <body>
-    <div class=\"main\">
-      <ul>");
+    let page = IndexPage {
+        books: library.books,
+    };
 
-    for b in library.books {
-        content.push_str(&format!("<li>{}</li>\n", b.title));
-    }
-
-    content.push_str("
-      </ul>
-    </div>
-  </body>
-</html>");
+    let html = page.render()?;
 
     std::fs::create_dir_all("dist")?;
-    std::fs::write("dist/index.html", &content)?;
+    std::fs::write("dist/index.html", html)?;
+    std::fs::copy("static/style.css", "dist/style.css")?;
 
     Ok(())
 }
